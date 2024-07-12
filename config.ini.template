@@ -1,0 +1,5 @@
+[Database Connection Values]
+SERVER = lm-dev-db3.bai.org
+DATABASE = ASP_eLearning
+USERNAME = lmsuser
+PASSWORD = 
