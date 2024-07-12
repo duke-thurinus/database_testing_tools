@@ -33,7 +33,10 @@ df2 = pd.read_sql(SQL_Query, conn)
 df2.sort_values(by=columns, inplace=True, ignore_index=True)
 
 comparisonDF = df1.compare(df2)
-print(comparisonDF)
+if comparisonDF.empty:
+    print('success')
+else:
+    print(comparisonDF)
 
 conn.close()
 
