@@ -1,6 +1,7 @@
 import pyodbc
 import pandas as pd
 import configparser
+import test_creator
 
 configP = configparser.ConfigParser()
 configP.read('config.ini')
@@ -14,23 +15,16 @@ connectionString = f'DRIVER={{SQL Server}};SERVER={SERVER};DATABASE={DATABASE};U
 
 conn = pyodbc.connect(connectionString)
 
-SQL_Query1 = """
-SET NOCOUNT ON;
-EXEC _rsp_getStudentDashContentByID [USERID]
-"""
-
-SQL_Query2 = """
-SET NOCOUNT ON;
-EXEC _rsp_getStudentDashContentByID_test [USERID]
-"""
-
 values = [200840797, 200938901, 200938922]
+
 for val in values:
-    df1 = pd.read_sql(SQL_Query1.replace('[USERID]', str(val)), conn)
+    test = test_creator.createTest(200840797)
+    
+    df1 = pd.read_sql(test["SQL_Query1"], conn)
     columns = df1.columns.to_list()
     df1.sort_values(by=columns, inplace=True, ignore_index=True)
 
-    df2 = pd.read_sql(SQL_Query2.replace('[USERID]', str(val)), conn)
+    df2 = pd.read_sql(test["SQL_Query2"], conn)
     df2.sort_values(by=columns, inplace=True, ignore_index=True)
 
     comparisonDF = df1.compare(df2)
