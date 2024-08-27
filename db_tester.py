@@ -15,11 +15,9 @@ connectionString = f'DRIVER={{SQL Server}};SERVER={SERVER};DATABASE={DATABASE};U
 
 conn = pyodbc.connect(connectionString)
 
-values = [200840797, 200938901, 200938922]
+tests = test_creator.loadTestsFromFile(configP['Database Connection Values']['TESTFOLDERPATH'])
 
-for val in values:
-    test = test_creator.createTest(200840797)
-    
+for test in tests:
     df1 = pd.read_sql(test["SQL_Query1"], conn)
     columns = df1.columns.to_list()
     df1.sort_values(by=columns, inplace=True, ignore_index=True)
@@ -29,9 +27,9 @@ for val in values:
 
     comparisonDF = df1.compare(df2)
     if comparisonDF.empty:
-        print('test with value: ' + str(val) + ' is successful')
+        print('test with value: ' + str(test["val"]) + ' is successful')
     else:
-        print('test with value: ' + str(val) + ' produced diffrences:')
+        print('test with value: ' + str(test["val"]) + ' produced diffrences:')
         print(comparisonDF)
 
 conn.close()
