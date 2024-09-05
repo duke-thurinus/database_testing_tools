@@ -15,7 +15,7 @@ connectionString = f'DRIVER={{SQL Server}};SERVER={SERVER};DATABASE={DATABASE};U
 
 conn = pyodbc.connect(connectionString)
 
-tests = test_creator.loadTestsFromFile(configP['Database Connection Values']['TESTFOLDERPATH'])
+tests = test_creator.loadTestsFromJsonFile(configP['Database Connection Values']['TESTFOLDERPATH'])
 
 for test in tests:
     df1 = pd.read_sql(test["SQL_Query1"], conn)

@@ -1,7 +1,7 @@
 import json
 from os import walk
 
-def loadTestsFromFile(path):
+def loadTestsFromJsonFile(path):
     filenames = next(walk(path), (None, None, []))[2]
     for file in filenames:
         with open(path + "\\" + file, "r") as f:
