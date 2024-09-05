@@ -6,26 +6,28 @@ import argparse
 
 def RunTests(tests, conn):
     for test in tests:
-        df1 = pd.read_sql(test["SQL_Query1"], conn)
+        test.createTestSQL()
+        df1 = pd.read_sql(test.Query1, conn)
         columns = df1.columns.to_list()
         df1.sort_values(by=columns, inplace=True, ignore_index=True)
 
-        df2 = pd.read_sql(test["SQL_Query2"], conn)
+        df2 = pd.read_sql(test.Query2, conn)
         df2.sort_values(by=columns, inplace=True, ignore_index=True)
 
         comparisonDF = df1.compare(df2)
         if comparisonDF.empty:
-            print('test with value: ' + str(test["val"]) + ' is successful')
+            print("test: " + test.testName + " is successful")
         else:
-            print('test with value: ' + str(test["val"]) + ' produced diffrences:')
+            print("test: " + test.testName + " produced diffrences:")
             print(comparisonDF)
 
 def PrintTests(tests):
     i = 0
     for test in tests:
-        print("Test " + str(i))
-        print(test["SQL_Query1"])
-        print(test["SQL_Query2"])
+        test.createTestSQL()
+        print(test.testName + ":")
+        print(test.Query1 + "\n")
+        print(test.Query2)
         print("---------")
         i += 1
 

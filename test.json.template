@@ -1,5 +1,13 @@
 [
   {
-    "val": 200938922
+    "test name" : "test1",
+    "procedure name": "procedure name",
+    "arguments": [
+      {
+        "name": "arg1",
+        "type": "INT",
+        "value": 200938922
+      }
+    ]
   }
 ]
