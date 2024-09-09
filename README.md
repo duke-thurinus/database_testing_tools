@@ -8,3 +8,4 @@ support .csv test files
 use a db connection that is more compatible with pandas
 clearer results on fail
 flag empty results
+expect same and expect different options
