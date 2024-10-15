@@ -83,7 +83,11 @@ class IntervalDateTimeParamater(Paramater):
         allowedIntervals = ['year', 'quarter', 'month', 'dayofyear', 'day', 'week', 'weekday', 'hour', 'minute', 'second', 'millisecond']
         if interval not in allowedIntervals:
             raise Exception('\'' + interval + '\' is not an allowed time interval. The allowed types are: ' + ', '.join(allowedIntervals))
-        #TODO validate value is int
+
+        #Validate value is int
+        if not isinstance(value, int):
+            raise Exception('value must be of type int')
+
         super().__init__(name, value)
         self.interval = interval
 
