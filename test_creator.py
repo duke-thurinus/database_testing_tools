@@ -27,6 +27,8 @@ class Test:
                 self.arguments.append(DateTimeParamater(arg["name"], arg["value"]))
             elif arg["type"].upper() == "INTERVAL DATETIME":
                 self.arguments.append(IntervalDateTimeParamater(arg["name"], arg["interval"], arg["value"]))
+            elif arg["type"].upper() == "TINTID":
+                self.arguments.append(tintIdTypeParamater(arg["name"], arg["values"]))
             else:
                 raise Exception(arg["type"] + " is not a valid paramater type")
 
@@ -97,6 +99,22 @@ class IntervalDateTimeParamater(Paramater):
 
     def SetUp(self):
         return f'DECLARE @{self.name} DATETIME = DATEADD({self.interval},{self.value}, GETDATE());'
+
+    def AddParamater(self):
+        return f'@{self.name} = @{self.name}'
+
+class tintIdTypeParamater(Paramater):
+    def __init__(self, name, value):
+        #Validate value is int
+        for i in value:
+            if not isinstance(i, int):
+                raise Exception('all values must be of type int')
+        
+        super().__init__(name, value)
+
+    def SetUp(self):
+        vals = ','.join('(' + str(x) + ')' for x in self.value)
+        return f'DECLARE @{self.name} tintIdType; INSERT INTO @{self.name} VALUES {vals}'
 
     def AddParamater(self):
         return f'@{self.name} = @{self.name}'

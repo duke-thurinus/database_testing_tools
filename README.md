@@ -3,9 +3,9 @@
 ## work todo
 add usage instructions to README
 
-support string argument type
+manage @ infront of variables make that more robust
 
-support tintIdType argument type
+support string argument type
 
 support .csv test files
 
