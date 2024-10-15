@@ -21,11 +21,11 @@ class Test:
         self.storedProcedureName2 = storedProcedureName2
         self.arguments = []
         for arg in arguments:
-            if arg["type"] == "INT":
+            if arg["type"].upper() == "INT":
                 self.arguments.append(IntParamater(arg["name"], arg["value"]))
-            elif arg["type"] == "DATETIME":
+            elif arg["type"].upper() == "DATETIME":
                 self.arguments.append(DateTimeParamater(arg["name"], arg["value"]))
-            elif arg["type"] == "INTERVAL DATETIME":
+            elif arg["type"].upper() == "INTERVAL DATETIME":
                 self.arguments.append(IntervalDateTimeParamater(arg["name"], arg["interval"], arg["value"]))
             else:
                 raise Exception(arg["type"] + " is not a valid paramater type")
