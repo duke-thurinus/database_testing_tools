@@ -23,6 +23,8 @@ class Test:
         for arg in arguments:
             if arg["type"] == "INT":
                 self.arguments.append(IntParamater(arg["name"], arg["value"]))
+            elif arg["type"] == "DATETIME":
+                self.arguments.append(DateTimeParamater(arg["name"], arg["value"]))
             else:
                 raise Exception(arg["type"] + " is not a valid paramater type")
 
@@ -55,6 +57,17 @@ class IntParamater(Paramater):
 
     def SetUp(self):
         return f'DECLARE @{self.name} INT = {self.value};'
+
+    def AddParamater(self):
+        return f'@{self.name} = @{self.name}'
+
+class DateTimeParamater(Paramater):
+    def __init__(self, name, value):
+        #TODO validate format
+        super().__init__(name, value)
+
+    def SetUp(self):
+        return f'DECLARE @{self.name} DATETIME = \'{self.value}\';'
 
     def AddParamater(self):
         return f'@{self.name} = @{self.name}'

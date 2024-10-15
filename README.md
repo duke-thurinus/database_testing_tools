@@ -3,8 +3,6 @@
 ## work todo
 add usage instructions to README
 
-support datetime argument type
-
 support string argument type
 
 support tintIdType argument type
