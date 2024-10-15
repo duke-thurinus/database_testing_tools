@@ -76,7 +76,13 @@ class DateTimeParamater(Paramater):
 
 class IntervalDateTimeParamater(Paramater):
     def __init__(self, name, interval, value):
-        #TODO validate interval
+        #Validate interval is valid
+        if not isinstance(interval, str):
+            raise Exception('interval must be of type string')
+        interval = interval.strip()
+        allowedIntervals = ['year', 'quarter', 'month', 'dayofyear', 'day', 'week', 'weekday', 'hour', 'minute', 'second', 'millisecond']
+        if interval not in allowedIntervals:
+            raise Exception('\'' + interval + '\' is not an allowed time interval. The allowed types are: ' + ', '.join(allowedIntervals))
         #TODO validate value is int
         super().__init__(name, value)
         self.interval = interval
