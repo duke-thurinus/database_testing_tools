@@ -55,6 +55,10 @@ class Paramater:
 
 class IntParamater(Paramater):
     def __init__(self, name, value):
+        #Validate value is int
+        if not isinstance(value, int):
+            raise Exception('value must be of type int')
+        
         super().__init__(name, value)
 
     def SetUp(self):
