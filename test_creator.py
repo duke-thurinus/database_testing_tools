@@ -25,6 +25,8 @@ class Test:
                 self.arguments.append(IntParamater(arg["name"], arg["value"]))
             elif arg["type"] == "DATETIME":
                 self.arguments.append(DateTimeParamater(arg["name"], arg["value"]))
+            elif arg["type"] == "INTERVAL DATETIME":
+                self.arguments.append(IntervalDateTimeParamater(arg["name"], arg["interval"], arg["value"]))
             else:
                 raise Exception(arg["type"] + " is not a valid paramater type")
 
@@ -68,6 +70,19 @@ class DateTimeParamater(Paramater):
 
     def SetUp(self):
         return f'DECLARE @{self.name} DATETIME = \'{self.value}\';'
+
+    def AddParamater(self):
+        return f'@{self.name} = @{self.name}'
+
+class IntervalDateTimeParamater(Paramater):
+    def __init__(self, name, interval, value):
+        #TODO validate interval
+        #TODO validate value is int
+        super().__init__(name, value)
+        self.interval = interval
+
+    def SetUp(self):
+        return f'DECLARE @{self.name} DATETIME = DATEADD({self.interval},{self.value}, GETDATE());'
 
     def AddParamater(self):
         return f'@{self.name} = @{self.name}'
