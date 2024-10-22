@@ -9,9 +9,18 @@ def RunTests(tests, conn):
         test.createTestSQL()
         df1 = pd.read_sql(test.Query1, conn)
         columns = df1.columns.to_list()
-        df1.sort_values(by=columns, inplace=True, ignore_index=True)
-
         df2 = pd.read_sql(test.Query2, conn)
+        
+
+        if len(df1) != len(df2):
+            print("test: " + test.testName + " results have diffrent number of rows")
+            continue
+
+        if len(df1.columns) != len(df2.columns):
+            print("test: " + test.testName + " results have diffrent number of colums")
+            continue
+
+        df1.sort_values(by=columns, inplace=True, ignore_index=True)
         df2.sort_values(by=columns, inplace=True, ignore_index=True)
 
         comparisonDF = df1.compare(df2)
